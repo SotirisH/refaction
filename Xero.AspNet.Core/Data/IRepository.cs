@@ -53,5 +53,11 @@ namespace Xero.AspNet.Core.Data
         /// <returns></returns>
         Task<IEnumerable<T>> GetAllAsync();
 
+        /// <summary>
+        /// Checks if the entity exists
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        Task<bool> ExistsAsync(Expression<Func<T, bool>> where);
     }
 }

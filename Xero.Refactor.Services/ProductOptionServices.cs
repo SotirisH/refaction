@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xero.AspNet.Core.Data;
 using Xero.Refactor.Data;
+using Xero.Refactor.Data.Models;
+using Xero.Refactor.Services.Exceptions;
 
 namespace Xero.Refactor.Services
 {
@@ -20,7 +22,7 @@ namespace Xero.Refactor.Services
         /// <param name="productId"></param>
         /// <param name="id">Teh product option Id</param>
         /// <returns></returns>
-        Task<ProductOptionDto> GetById(Guid productId, Guid id);
+        Task<ProductOptionDto> GetByIdAsync(Guid productId, Guid id);
         /// <summary>
         /// Creates an new productOption option
         /// </summary>
@@ -43,33 +45,59 @@ namespace Xero.Refactor.Services
 
     public class ProductOptionServices : DbServiceBase<RefactorDb>, IProductOptionServices
     {
+        private readonly IRepository<ProductOption> _productOptionRepository;
         public ProductOptionServices(IUnitOfWork<RefactorDb> unitOfWork) : base(unitOfWork)
         {
         }
 
-        public Task<ProductOptionDto> CreateAsync(ProductOptionDto productOption)
+        public async Task<ProductOptionDto> CreateAsync(ProductOptionDto productOption)
         {
-            throw new NotImplementedException();
+            if (productOption.Id == Guid.Empty)
+            {
+                productOption.Id = Guid.NewGuid();
+            }
+            var efentity = AutoMapper.Mapper.Map<ProductOption>(productOption);
+            _productOptionRepository.Add(efentity);
+            await UoW.CommitAsync();
+            return AutoMapper.Mapper.Map<ProductOptionDto>(efentity);
         }
 
-        public Task<bool> DeleteByIdAsync(Guid id)
+        public async Task<bool> DeleteByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var entityToDelete = await _productOptionRepository.GetAsync(x => x.Id == id);
+            if (entityToDelete == null)
+            {
+                return false;
+            }
+            _productOptionRepository.Delete(entityToDelete);
+            await UoW.CommitAsync();
+            return true;
         }
 
-        public Task<ProductOptionDto> GetById(Guid productId, Guid id)
+        public async Task<ProductOptionDto> GetByIdAsync(Guid productId, Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _productOptionRepository.GetAsync(x => x.Id == id && x.ProductId == productId);
+            return AutoMapper.Mapper.Map<ProductOptionDto>(result);
         }
 
-        public Task<IEnumerable<ProductOptionDto>> GetByProductIdAsync(Guid productId)
+        public async Task<IEnumerable<ProductOptionDto>> GetByProductIdAsync(Guid productId)
         {
-            throw new NotImplementedException();
+            var result = await _productOptionRepository.GetManyAsync(x => x.ProductId == productId);
+            return AutoMapper.Mapper.Map<IEnumerable<ProductOptionDto>>(result);
         }
 
-        public Task<ProductOptionDto> UpdateAsync(ProductOptionDto productOption)
+        public async Task<ProductOptionDto> UpdateAsync(ProductOptionDto productOption)
         {
-            throw new NotImplementedException();
+            var entityToUpdate = AutoMapper.Mapper.Map<ProductOption>(productOption);
+            //Check if the entity exists
+            if (!await _productOptionRepository.ExistsAsync(x => x.Id == productOption.Id))
+            {
+                throw new EntityNotFoundException($"The ProductOption with Id:{productOption.Id} could not be found in order to update it");
+            }
+            _productOptionRepository.Update(entityToUpdate);
+            await UoW.CommitAsync();
+            return AutoMapper.Mapper.Map<ProductOptionDto>(entityToUpdate);
+
         }
     }
 }

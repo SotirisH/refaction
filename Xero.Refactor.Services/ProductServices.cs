@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Xero.AspNet.Core.Data;
 using Xero.Refactor.Data;
 using Xero.Refactor.Data.Models;
+using Xero.Refactor.Services.Exceptions;
 
 namespace Xero.Refactor.Services
 {
@@ -99,6 +100,10 @@ namespace Xero.Refactor.Services
         public async Task<ProductDto> UpdateAsync(ProductDto product)
         {
             var efProduct = AutoMapper.Mapper.Map<Product>(product);
+            if (!await _productRepository.ExistsAsync(x => x.Id == efProduct.Id))
+            {
+                throw new EntityNotFoundException($"The Product with Id:{efProduct.Id} could not be found in order to update it");
+            }
             _productRepository.Update(efProduct);
             await UoW.CommitAsync();
             return AutoMapper.Mapper.Map<ProductDto>(efProduct);

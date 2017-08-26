@@ -28,5 +28,12 @@ namespace Xero.AspNet.Core.Data
         {
             return await dbSet.ToArrayAsync();
         }
+
+        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> where)
+        {
+            return await dbSet.AnyAsync(where);
+        }
+
+
     }
 }
