@@ -87,6 +87,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Fixtures.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="ProductServicesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

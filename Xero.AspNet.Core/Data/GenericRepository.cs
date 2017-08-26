@@ -44,7 +44,6 @@ namespace Xero.AspNet.Core.Data
             // https://cmatskas.com/an-object-with-the-same-key-already-exists-in-the-objectstatemanager-entity-frawework/
 
             var entry = DbContext.Entry(entity);
-
             var key = GetPrimaryKey(entry);
             if (entry.State == EntityState.Detached)
             {

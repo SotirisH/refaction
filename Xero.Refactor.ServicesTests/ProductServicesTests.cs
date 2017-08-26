@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System.Data.Common;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Xero.AspNet.Core.Data;
-using Xero.Refactor.Data;
+using Xero.Refactor.ServicesTests;
 
 namespace Xero.Refactor.Services.Tests
 {
@@ -24,28 +23,132 @@ namespace Xero.Refactor.Services.Tests
 
 
         [TestMethod()]
-        public void CreateAsyncTest()
+        public void BasicCreateAsyncTest()
         {
-            var mockICurrentUserService = new Mock<ICurrentUserService>();
-            mockICurrentUserService.Setup(p => p.GetCurrentUser()).Returns("TestUser");
 
-            DbConnection memoryConnection = Effort.DbConnectionFactory.CreateTransient();
-            var memDB = new Data.RefactorDb(memoryConnection);
-            // Mocking up dbFactory
-            var mockdbFactory = new Mock<DbFactory<RefactorDb>>();
-            mockdbFactory.Setup(m => m.DBContext).Returns(memDB);
-            IUnitOfWork<RefactorDb> UoW = new UnitOfWork<RefactorDb>(mockdbFactory.Object, mockICurrentUserService.Object);
 
-            var target = new ProductServices(UoW);
-            var mockProduct = new ProductDto() {Name="Test",Description="Test",Price=10, DeliveryPrice=10 };
-            var result=Task.FromResult(target.CreateAsync(mockProduct)).Result;
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct = Fixtures.ProductsBuildOne();
+            var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
 
             Assert.IsNull(result.Exception);
             Assert.IsNotNull(result.Result);
             // The row version is returned
             Assert.IsNotNull(result.Result.RowVersion);
-            Assert.IsTrue(result.Result.RowVersion.Length>0);
+            Assert.IsTrue(result.Result.RowVersion.Length > 0);
+        }
 
+        [TestMethod()]
+        public async Task Delete_product_sucess()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct = Fixtures.ProductsBuildOne();
+            var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
+            var newProductId = result.Result.Id;
+            var deleteResult = await target.DeleteByIdAsync(newProductId);
+            Assert.IsTrue(deleteResult);
+
+
+        }
+        [TestMethod()]
+        public async Task Delete_product_fail()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct = Fixtures.ProductsBuildOne();
+            var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
+            var newProductId = Guid.NewGuid(); ;
+            var deleteResult = await target.DeleteByIdAsync(newProductId);
+            Assert.IsFalse(deleteResult);
+        }
+
+        [TestMethod()]
+        public async Task Get_all_products_expected_two()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct1 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct1);
+            var mockProduct2 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct2);
+
+            var result = await target.GetAllAsync();
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count(), "Expected two products to be found!");
+        }
+
+        [TestMethod()]
+        public async Task Discover_product_by_id()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct1 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct1);
+            var mockProduct2 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct2);
+
+            var result = await target.GetByIdAsync(mockProduct2.Id);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(mockProduct2.Id, result.Id);
+        }
+
+        [TestMethod()]
+        public async Task Discover_product_by_name_expect_two()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct1 = Fixtures.ProductsBuildOne();
+            // Bogus doesn't ensure unique names
+            mockProduct1.Name = "Prod1";
+            await target.CreateAsync(mockProduct1);
+            var mockProduct2 = Fixtures.ProductsBuildOne();
+
+            await target.CreateAsync(mockProduct2);
+
+            var mockProduct3 = Fixtures.ProductsBuildOne();
+            mockProduct3.Name = mockProduct2.Name;
+            await target.CreateAsync(mockProduct3);
+
+
+            var result = await target.GetByNameAsync(mockProduct2.Name);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count(), $"Expected two products with name '{ mockProduct2.Name}' to be found!");
+            Assert.AreEqual(mockProduct2.Name, result.First().Name);
+        }
+
+        [TestMethod()]
+        public async Task Update_product_success()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct1 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct1);
+            var mockProduct2 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct2);
+
+            var mockProduct3 = Fixtures.ProductsBuildOne();
+            var prodtoUpdate = await target.CreateAsync(mockProduct3);
+
+            prodtoUpdate.Name = "UpdatedProd";
+            var result = await target.UpdateAsync(prodtoUpdate);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(prodtoUpdate.Name, result.Name);
+            Assert.AreNotEqual(mockProduct3.Name, result.Name);
+        }
+
+        [TestMethod()]
+        public async Task Update_product_conflict()
+        {
+            var target = new ProductServices(Helper.CreateMemoryUow());
+            var mockProduct1 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct1);
+            var mockProduct2 = Fixtures.ProductsBuildOne();
+            await target.CreateAsync(mockProduct2);
+
+            var mockProduct3 = Fixtures.ProductsBuildOne();
+            var prodtoUpdate = await target.CreateAsync(mockProduct3);
+
+            prodtoUpdate.Name = "UpdatedProd";
+            // Initial update
+            var result = await target.UpdateAsync(prodtoUpdate);
+            // need to revise
+            prodtoUpdate.Name = "Confict";
+            var result2 = Task.FromResult(target.UpdateAsync(prodtoUpdate)).Result;
         }
     }
 }

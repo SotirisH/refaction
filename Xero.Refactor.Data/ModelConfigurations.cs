@@ -12,7 +12,7 @@ namespace Xero.Refactor.Data
         public ProductConfiguration()
         {
             HasKey(p => p.Id);
-            Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            //Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(p => p.Name).IsRequired().HasMaxLength(100);
             Property(p => p.Description).HasMaxLength(500);
         }
@@ -26,7 +26,7 @@ namespace Xero.Refactor.Data
         public ProductOptionConfiguration()
         {
             HasKey(p => p.Id);
-            Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            //Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(p => p.Name).IsRequired().HasMaxLength(100);
             Property(p => p.Description).HasMaxLength(500);
             HasRequired(p => p.Product)

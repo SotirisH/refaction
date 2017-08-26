@@ -48,6 +48,7 @@ namespace Xero.Refactor.Services
         private readonly IRepository<ProductOption> _productOptionRepository;
         public ProductOptionServices(IUnitOfWork<RefactorDb> unitOfWork) : base(unitOfWork)
         {
+            _productOptionRepository= UoW.DbFactory.GetGenericRepositoryOf<ProductOption>();
         }
 
         public async Task<ProductOptionDto> CreateAsync(ProductOptionDto productOption)

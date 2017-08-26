@@ -93,7 +93,7 @@ namespace Xero.Refactor.Services
 
         public async Task<IEnumerable<ProductDto>> GetByNameAsync(string name)
         {
-            var result = await _productRepository.GetAsync(x => x.Name == name);
+            var result = await _productRepository.GetManyAsync(x => x.Name == name);
             return AutoMapper.Mapper.Map<IEnumerable<ProductDto>>(result);
         }
 
@@ -106,7 +106,9 @@ namespace Xero.Refactor.Services
             }
             _productRepository.Update(efProduct);
             await UoW.CommitAsync();
-            return AutoMapper.Mapper.Map<ProductDto>(efProduct);
+            // get the new values of the timestamp
+            var t=_productRepository.GetById(efProduct.Id);
+            return AutoMapper.Mapper.Map<ProductDto>(t);
         }
     }
 }
