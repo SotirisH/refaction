@@ -1,8 +1,9 @@
 ﻿using System;
+using Xero.AspNet.Core.Data;
 
 namespace Xero.Refactor.Data.Models
 {
-    public class ProductOption
+    public class ProductOption : EntityBase
     {
         public Guid Id { get; set; }
 
@@ -11,5 +12,10 @@ namespace Xero.Refactor.Data.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        /// <summary>
+        /// Navigation Property on Products
+        /// </summary>
+        public Product Product { get; set; }
     }
 }

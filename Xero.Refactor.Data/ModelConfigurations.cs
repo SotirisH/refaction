@@ -29,6 +29,9 @@ namespace Xero.Refactor.Data
             Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(p => p.Name).IsRequired().HasMaxLength(100);
             Property(p => p.Description).HasMaxLength(500);
+            HasRequired(p => p.Product)
+             .WithMany(s => s.ProductOptions)
+             .HasForeignKey(s => s.ProductId);
         }
     }
 }

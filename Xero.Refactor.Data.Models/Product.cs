@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Xero.AspNet.Core.Data;
 
 namespace Xero.Refactor.Data.Models
 {
-    public class Product
+    public class Product: EntityBase
     {
         public Guid Id { get; set; }
 
@@ -13,6 +15,7 @@ namespace Xero.Refactor.Data.Models
         public decimal Price { get; set; }
 
         public decimal DeliveryPrice { get; set; }
+        public virtual ICollection<ProductOption> ProductOptions { get; set; }
 
     }
 }
