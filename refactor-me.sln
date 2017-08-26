@@ -1,9 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactor-me", "refactor-me\refactor-me.csproj", "{20AB69F9-F2D3-4A68-96C3-424EC8B9406E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi", "refactor-me\Xero.Refactor.WebApi.csproj", "{20AB69F9-F2D3-4A68-96C3-424EC8B9406E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{12512D24-D90A-4CC9-99B6-C16FA3992A31}"
+	ProjectSection(SolutionItems) = preProject
+		Implementation.md = Implementation.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.AspNet.Core", "Xero.AspNet.Core\Xero.AspNet.Core.csproj", "{0D32740A-A972-4B73-909B-B81FF2FDFF1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Services", "Xero.Refactor.Services\Xero.Refactor.Services.csproj", "{B7AE9186-E9E8-4B7F-8626-00ABE7AFAAFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data", "Xero.Refactor.Data\Xero.Refactor.Data.csproj", "{7B03C0C5-5688-48A5-9493-3578B78E74A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data.Models", "Xero.Refactor.Data.Models\Xero.Refactor.Data.Models.csproj", "{ECBDB2D6-1616-4674-84F5-78B362723570}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Modeling", "Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj", "{72AEC772-EB69-4836-83DE-EE185C77574A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +30,31 @@ Global
 		{20AB69F9-F2D3-4A68-96C3-424EC8B9406E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20AB69F9-F2D3-4A68-96C3-424EC8B9406E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20AB69F9-F2D3-4A68-96C3-424EC8B9406E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D32740A-A972-4B73-909B-B81FF2FDFF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D32740A-A972-4B73-909B-B81FF2FDFF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D32740A-A972-4B73-909B-B81FF2FDFF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D32740A-A972-4B73-909B-B81FF2FDFF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7AE9186-E9E8-4B7F-8626-00ABE7AFAAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7AE9186-E9E8-4B7F-8626-00ABE7AFAAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7AE9186-E9E8-4B7F-8626-00ABE7AFAAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7AE9186-E9E8-4B7F-8626-00ABE7AFAAFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B03C0C5-5688-48A5-9493-3578B78E74A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B03C0C5-5688-48A5-9493-3578B78E74A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B03C0C5-5688-48A5-9493-3578B78E74A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B03C0C5-5688-48A5-9493-3578B78E74A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECBDB2D6-1616-4674-84F5-78B362723570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECBDB2D6-1616-4674-84F5-78B362723570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECBDB2D6-1616-4674-84F5-78B362723570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECBDB2D6-1616-4674-84F5-78B362723570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AEC772-EB69-4836-83DE-EE185C77574A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AEC772-EB69-4836-83DE-EE185C77574A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AEC772-EB69-4836-83DE-EE185C77574A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AEC772-EB69-4836-83DE-EE185C77574A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49DD72C3-F628-4AB4-A349-96983A12EC61}
 	EndGlobalSection
 EndGlobal
