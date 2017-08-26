@@ -12,32 +12,32 @@ namespace refactor_me.Controllers
         [HttpGet]
         public Products GetAll()
         {
-            return new Products();
+            //return new Products();
         }
 
         [Route]
         [HttpGet]
         public Products SearchByName(string name)
         {
-            return new Products(name);
+            //return new Products(name);
         }
 
         [Route("{id}")]
         [HttpGet]
         public Product GetProduct(Guid id)
         {
-            var product = new Product(id);
-            if (product.IsNew)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+            //var product = new Product(id);
+            //if (product.IsNew)
+            //    throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return product;
+            //return product;
         }
 
         [Route]
         [HttpPost]
         public void Create(Product product)
         {
-            product.Save();
+            //product.Save();
         }
 
         [Route("{id}")]

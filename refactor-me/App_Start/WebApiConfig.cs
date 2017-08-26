@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using FluentValidation.WebApi;
+using System.Web.Http;
 
 namespace refactor_me
 {
@@ -19,6 +20,9 @@ namespace refactor_me
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Register FluentValidationModelValidator here
+            FluentValidationModelValidatorProvider.Configure(config);
         }
     }
 }
