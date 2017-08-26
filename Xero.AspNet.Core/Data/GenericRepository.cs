@@ -51,7 +51,13 @@ namespace Xero.AspNet.Core.Data
                 if (currentEntry != null)
                 {
                     var attachedEntry = DbContext.Entry(currentEntry);
+                    
                     attachedEntry.CurrentValues.SetValues(entity);
+                    // because the Ef got the original Timestamp from the db
+                    //i need to replace the original value, otherwise a dbConcurency exception is not thrown
+                    //https://stackoverflow.com/questions/12779259/entity-framework-entity-update-ignoring-timestamp
+                    attachedEntry.Property(p => p.RowVersion).OriginalValue = entity.RowVersion;
+                    attachedEntry.Property(p => p.RowVersion).IsModified = true;
                 }
                 else
                 {

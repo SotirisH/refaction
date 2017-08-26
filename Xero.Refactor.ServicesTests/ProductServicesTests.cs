@@ -149,6 +149,8 @@ namespace Xero.Refactor.Services.Tests
             // need to revise
             prodtoUpdate.Name = "Confict";
             var result2 = Task.FromResult(target.UpdateAsync(prodtoUpdate)).Result;
+            Assert.IsNotNull(result2.Exception);
+            Assert.IsInstanceOfType(result2.Exception.InnerException, typeof(System.Data.Entity.Infrastructure.DbUpdateConcurrencyException));
         }
     }
 }
