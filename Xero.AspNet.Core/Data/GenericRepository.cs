@@ -12,7 +12,7 @@ namespace Xero.AspNet.Core.Data
     /// </summary>
     /// <typeparam name="T">The EntityBase object that the CRUD acctions will be performed</typeparam>
     /// <typeparam name="DB">The DbContext that will perform all DB actions</typeparam>
-    public class GenericRepository<T, DB> : IRepository<T> where T : EntityBase
+    public partial class GenericRepository<T, DB> : IRepository<T> where T : EntityBase
                                                        where DB : DbContext, IAuditableDBContext, new()
     {
         private readonly IDbSet<T> dbSet;
@@ -157,6 +157,12 @@ namespace Xero.AspNet.Core.Data
             //        .GetProperties()
             //        .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(KeyAttribute)));
             //return property.GetValue(myObject, null);
+        }
+
+        public T GetByEntity(T entity)
+        {
+            var entry = DbContext.Entry(entity);
+            return entry.Entity;
         }
     }
 }

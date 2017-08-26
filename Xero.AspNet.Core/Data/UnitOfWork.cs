@@ -42,6 +42,6 @@ namespace Xero.AspNet.Core.Data
 
         public void Commit() => DbContext.SaveChanges(UserName);
 
-        public Task<int> CommitAsync() => DbContext.SaveChangesAsync();
+        public async Task<int> CommitAsync() => await DbContext.SaveChangesAsync();
     }
 }

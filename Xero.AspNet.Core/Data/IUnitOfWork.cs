@@ -1,10 +1,12 @@
 ﻿using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Xero.AspNet.Core.Data
 {
     public interface IUnitOfWork
     {
         void Commit();
+        Task<int> CommitAsync();
     }
 
     /// <summary>

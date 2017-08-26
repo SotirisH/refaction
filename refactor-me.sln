@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data.Models",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Modeling", "Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj", "{72AEC772-EB69-4836-83DE-EE185C77574A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.ServicesTests", "Xero.Refactor.ServicesTests\Xero.Refactor.ServicesTests.csproj", "{DDF56E71-601A-409D-B091-1C882942BDED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{72AEC772-EB69-4836-83DE-EE185C77574A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72AEC772-EB69-4836-83DE-EE185C77574A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72AEC772-EB69-4836-83DE-EE185C77574A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF56E71-601A-409D-B091-1C882942BDED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF56E71-601A-409D-B091-1C882942BDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF56E71-601A-409D-B091-1C882942BDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF56E71-601A-409D-B091-1C882942BDED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

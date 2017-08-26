@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xero.AspNet.Core.Data;
 using Xero.Refactor.Data;
+using Xero.Refactor.Data.Models;
 
 namespace Xero.Refactor.Services
 {
@@ -29,13 +30,13 @@ namespace Xero.Refactor.Services
         /// Creates an new Product
         /// </summary>
         /// <param name="product"></param>
-        /// <returns>Returs the newly created product</returns>
+        /// <returns>Returns the newly created product</returns>
         Task<ProductDto> CreateAsync(ProductDto product);
         /// <summary>
         /// Updates an existing product
         /// </summary>
         /// <param name="product"></param>
-        /// <returns>The updated product</returns>
+        /// <returns>Returns the updated product</returns>
         Task<ProductDto> UpdateAsync(ProductDto product);
         /// <summary>
         /// Deletes a product by id
@@ -45,41 +46,62 @@ namespace Xero.Refactor.Services
         Task<bool> DeleteByIdAsync(Guid id);
     }
 
-    public class ProductServices: DbServiceBase<RefactorDb>, IProductServices
+    public class ProductServices : DbServiceBase<RefactorDb>, IProductServices
     {
-
-        public ProductServices(IUnitOfWork<RefactorDb> unitOfWork):base(unitOfWork)
+        private readonly IRepository<Product> _productRepository;
+        public ProductServices(IUnitOfWork<RefactorDb> unitOfWork) : base(unitOfWork)
         {
+            _productRepository = UoW.DbFactory.GetGenericRepositoryOf<Product>();
         }
 
-        public Task<ProductDto> CreateAsync(ProductDto product)
+        public async Task<ProductDto> CreateAsync(ProductDto product)
         {
-            throw new NotImplementedException();
+            if (product.Id == Guid.Empty)
+            {
+                product.Id = Guid.NewGuid();
+            }
+            var efProduct = AutoMapper.Mapper.Map<Product>(product);
+            _productRepository.Add(efProduct);
+            await UoW.CommitAsync();
+            return AutoMapper.Mapper.Map<ProductDto>(efProduct);
         }
 
-        public Task<bool> DeleteByIdAsync(Guid id)
+        public async Task<bool> DeleteByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var productToDelete = await _productRepository.GetAsync(x => x.Id == id);
+            if (productToDelete == null)
+            {
+                return false;
+            }
+            _productRepository.Delete(productToDelete);
+            await UoW.CommitAsync();
+            return true;
         }
 
-        public Task<IEnumerable<ProductDto>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var result = await _productRepository.GetAllAsync();
+            return AutoMapper.Mapper.Map<IEnumerable<ProductDto>>(result);
         }
 
-        public Task<ProductDto> GetByIdAsync(Guid id)
+        public async Task<ProductDto> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _productRepository.GetAsync(x => x.Id == id);
+            return AutoMapper.Mapper.Map<ProductDto>(result);
         }
 
-        public Task<IEnumerable<ProductDto>> GetByNameAsync(string name)
+        public async Task<IEnumerable<ProductDto>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            var result = await _productRepository.GetAsync(x => x.Name == name);
+            return AutoMapper.Mapper.Map<IEnumerable<ProductDto>>(result);
         }
 
-        public Task<ProductDto> UpdateAsync(ProductDto product)
+        public async Task<ProductDto> UpdateAsync(ProductDto product)
         {
-            throw new NotImplementedException();
+            var efProduct = AutoMapper.Mapper.Map<Product>(product);
+            _productRepository.Update(efProduct);
+            await UoW.CommitAsync();
+            return AutoMapper.Mapper.Map<ProductDto>(efProduct);
         }
     }
 }

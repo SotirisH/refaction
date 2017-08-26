@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Xero.AspNet.Core.Data
 {
@@ -24,6 +25,8 @@ namespace Xero.AspNet.Core.Data
         // Get an entity using delegate
         T Get(Expression<Func<T, bool>> where);
 
+        T GetByEntity(T entity);
+
         // Gets all entities of type T
         IEnumerable<T> GetAll();
 
@@ -31,5 +34,24 @@ namespace Xero.AspNet.Core.Data
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
 
         IQueryable<T> GetAsQueryable();
+
+        /// <summary>
+        /// Gets a single entity in an asychronous way.
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        Task<T> GetAsync(Expression<Func<T, bool>> where);
+        /// <summary>
+        /// Gets multiple entities in an asychronous way
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> where);
+        /// <summary>
+        /// Gets all the entities in an asynchronous way
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<T>> GetAllAsync();
+
     }
 }
