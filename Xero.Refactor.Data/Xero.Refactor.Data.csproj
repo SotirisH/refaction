@@ -55,6 +55,10 @@
     <Compile Include="Migrations\201708260451022_SetNavigationProp.Designer.cs">
       <DependentUpon>201708260451022_SetNavigationProp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708270801530_Final.cs" />
+    <Compile Include="Migrations\201708270801530_Final.Designer.cs">
+      <DependentUpon>201708270801530_Final.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigurations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708260451022_SetNavigationProp.resx">
       <DependentUpon>201708260451022_SetNavigationProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708270801530_Final.resx">
+      <DependentUpon>201708270801530_Final.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

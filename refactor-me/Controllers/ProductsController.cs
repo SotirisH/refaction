@@ -5,12 +5,16 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Xero.Refactor.Services;
 using Xero.Refactor.Services.Exceptions;
 using Xero.Refactor.WebApi.Hypermedia;
 using Xero.Refactor.WebApi.Modeling;
 namespace Xero.Refactor.WebApi.Controllers
 {
+    /// <summary>
+    /// API for Products
+    /// </summary>
     [RoutePrefix("api/products")]
     public class ProductsController : ApiController
     {
@@ -27,16 +31,28 @@ namespace Xero.Refactor.WebApi.Controllers
             _linkGenerator = linkGenerator;
         }
 
+        /// <summary>
+        /// Gets all products
+        /// </summary>
+        /// <returns></returns>
+        /// 
         [Route]
         [HttpGet]
+        [ResponseType(typeof(IEnumerable<ProductApiModel>))]
         public async Task<IHttpActionResult> GetAll()
         {
             var result = await _productServices.GetAllAsync();
             return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
         }
 
+        /// <summary>
+        /// Gets all products with a specific name
+        /// </summary>
+        /// <param name="name">the name of the product to be searched</param>
+        /// <returns></returns>
         [Route]
         [HttpGet]
+        [ResponseType(typeof(IEnumerable<ProductApiModel>))]
         public async Task<IHttpActionResult> SearchByName(string name)
         {
             var result = await _productServices.GetByNameAsync(name);
@@ -48,8 +64,14 @@ namespace Xero.Refactor.WebApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Gets a specific product by its id
+        /// </summary>
+        /// <param name="id">The id of the product</param>
+        /// <returns></returns>
         [Route("{id}")]
         [HttpGet]
+        [ResponseType(typeof(ProductApiModel))]
         public async Task<IHttpActionResult> GetProduct(Guid id)
         {
             var result = await _productServices.GetByIdAsync(id);
@@ -62,8 +84,14 @@ namespace Xero.Refactor.WebApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Creates a new product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [Route]
         [HttpPost]
+        [ResponseType(typeof(ProductApiModel))]
         public async Task<IHttpActionResult> Create(ProductApiModel product)
         {
 
@@ -75,9 +103,15 @@ namespace Xero.Refactor.WebApi.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map<ProductApiModel>(result));
         }
-
+        /// <summary>
+        /// Updates an existing product
+        /// </summary>
+        /// <param name="id">The id of the product</param>
+        /// <param name="product">The new values</param>
+        /// <returns></returns>
         [Route("{id}")]
         [HttpPut]
+        [ResponseType(typeof(ProductApiModel))]
         public async Task<IHttpActionResult> Update(Guid id, ProductApiModel product)
         {
             if (!ModelState.IsValid)
@@ -108,7 +142,11 @@ namespace Xero.Refactor.WebApi.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// Deletes a product
+        /// </summary>
+        /// <param name="id">The id of the product that we want to delete</param>
+        /// <returns></returns>
         [Route("{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(Guid id)
@@ -128,6 +166,7 @@ namespace Xero.Refactor.WebApi.Controllers
 
         [Route("{productId}/options")]
         [HttpGet]
+        [ResponseType(typeof(IEnumerable<ProductOptionApiModel>))]
         public async Task<IHttpActionResult> GetOptions(Guid productId)
         {
             var result = await _productOptionServices.GetByProductIdAsync(productId);
@@ -140,6 +179,7 @@ namespace Xero.Refactor.WebApi.Controllers
 
         [Route("{productId}/options/{id}")]
         [HttpGet]
+        [ResponseType(typeof(ProductOptionApiModel))]
         public async Task<IHttpActionResult> GetOption(Guid productId, Guid id)
         {
             var result = await _productOptionServices.GetByIdAsync(id);
@@ -152,6 +192,7 @@ namespace Xero.Refactor.WebApi.Controllers
 
         [Route("{productId}/options")]
         [HttpPost]
+        [ResponseType(typeof(ProductOptionApiModel))]
         public async Task<IHttpActionResult> CreateOption(Guid productId, ProductOptionApiModel option)
         {
             option.ProductId = productId;
@@ -166,6 +207,7 @@ namespace Xero.Refactor.WebApi.Controllers
 
         [Route("{productId}/options/{id}")]
         [HttpPut]
+        [ResponseType(typeof(ProductOptionApiModel))]
         public async Task<IHttpActionResult> UpdateOption(Guid id, ProductOptionApiModel option)
         {
             if (!ModelState.IsValid)

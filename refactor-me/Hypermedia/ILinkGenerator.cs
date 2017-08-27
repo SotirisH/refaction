@@ -18,6 +18,8 @@ namespace Xero.Refactor.WebApi.Hypermedia
         {
             if (linkResource == null || urlHelper == null)
                 return;
+            if (linkResource.Links == null)
+                linkResource.Links = new System.Collections.Generic.List<Link>();
 
             linkResource.Links.Add(
              new Link()
