@@ -28,7 +28,7 @@ namespace Xero.Refactor.WebApiTests
 
             mockIProductOptionServices.Setup(m => m.GetByProductIdAsync(mockDto.ProductId)).Returns(Task.FromResult(retMock));
             var result = await target.GetOptions(mockDto.ProductId) as OkNegotiatedContentResult<IEnumerable<ProductOptionApiModel>>;
-            Assert.IsNotNull(result);
+            AssertX.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<IEnumerable<ProductOptionApiModel>>));
             Assert.AreEqual(retMock.First().ProductId, result.Content.First().Id);
             Assert.AreEqual(retMock.First().Name, result.Content.First().Name);
             Assert.AreEqual(retMock.First().Description, result.Content.First().Description);
@@ -41,8 +41,7 @@ namespace Xero.Refactor.WebApiTests
             var retMock = (new List<ProductOptionDto>()).AsEnumerable();
             mockIProductOptionServices.Setup(m => m.GetByProductIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(retMock));
             var result = await target.GetOptions(Guid.Empty) as NotFoundResult;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+            AssertX.IsInstanceOfType(result, typeof(NotFoundResult));
 
         }
 
@@ -54,8 +53,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.GetByIdAsync(mockDto.Id)).Returns(Task.FromResult(mockDto));
 
             var result = await target.GetOption(mockDto.ProductId, mockDto.Id) as OkNegotiatedContentResult<ProductOptionApiModel>;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ProductOptionApiModel>));
+            AssertX.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ProductOptionApiModel>));
             Assert.AreEqual(mockDto.ProductId, result.Content.ProductId);
             Assert.AreEqual(mockDto.Name, result.Content.Name);
             Assert.AreEqual(mockDto.Description, result.Content.Description);
@@ -70,8 +68,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.GetByIdAsync(mockDto.Id)).Returns(Task.FromResult(mockDto));
 
             var result = await target.GetOption(mockDto.ProductId, Guid.NewGuid()) as NotFoundResult;
-            result = null;
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult), $"A type of {typeof(NotFoundResult)} is expected!");
+            AssertX.IsInstanceOfType(result, typeof(NotFoundResult));
 
         }
 
@@ -84,7 +81,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.CreateAsync(It.IsAny<ProductOptionDto>())).Returns(Task.FromResult(mockDto));
 
             var result = await target.CreateOption(mockDto.ProductId, mockApi) as CreatedAtRouteNegotiatedContentResult<ProductOptionApiModel>;
-            Assert.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<ProductOptionApiModel>),$"A type of {typeof(CreatedAtRouteNegotiatedContentResult<ProductOptionApiModel>)} is expected!");
+            AssertX.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<ProductOptionApiModel>));
             Assert.AreEqual(mockApi.ProductId, result.Content.ProductId);
             Assert.AreEqual(mockApi.Name, result.Content.Name);
             Assert.AreEqual(mockApi.Description, result.Content.Description);
@@ -100,7 +97,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.CreateAsync(It.IsAny<ProductOptionDto>())).Returns(Task.FromResult(mockDto));
             target.ModelState.AddModelError("Name", "No Value");
             var result = await target.CreateOption(mockDto.ProductId, mockApi) as InvalidModelStateResult;
-            Assert.IsInstanceOfType(result, typeof(InvalidModelStateResult), $"A type of {typeof(InvalidModelStateResult)} is expected!");
+            AssertX.IsInstanceOfType(result, typeof(InvalidModelStateResult));
             CollectionAssert.Contains(result.ModelState.Keys.ToArray(), "Name");
         }
 
@@ -110,7 +107,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.DeleteByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(true));
 
             var result = await target.DeleteOption(Guid.NewGuid()) as OkResult;
-            Assert.IsNotNull(result, "A type of OkResult is expected!");
+            AssertX.IsInstanceOfType(result, typeof(OkResult));
         }
 
         [TestMethod()]
@@ -119,8 +116,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.DeleteByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(false));
 
             var result = await target.DeleteOption(Guid.NewGuid()) as NotFoundResult;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult), "A type of NotFoundResult is expected!");
+            AssertX.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
 
@@ -135,24 +131,20 @@ namespace Xero.Refactor.WebApiTests
 
             target.ModelState.AddModelError("Name", "Name is not present!");
             IHttpActionResult result = await target.UpdateOption(mockApi.Id, mockApi) as InvalidModelStateResult;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(InvalidModelStateResult), "A type of InvalidModelStateResult is expected!");
+            AssertX.IsInstanceOfType(result, typeof(InvalidModelStateResult));
             CollectionAssert.Contains(((InvalidModelStateResult)result).ModelState.Keys.ToArray(), "Name");
 
             target.ModelState.Clear();
             result = await target.UpdateOption(Guid.Empty, mockApi) as BadRequestErrorMessageResult;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(BadRequestErrorMessageResult), "A type of BadRequestResult is expected!");
+            AssertX.IsInstanceOfType(result, typeof(BadRequestErrorMessageResult));
 
             mockIProductOptionServices.Setup(m => m.UpdateAsync(It.IsAny<ProductOptionDto>())).Throws(new EntityNotFoundException("Not found!"));
             result = await target.UpdateOption(mockApi.Id, mockApi) as NotFoundResult;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult), "A type of NotFoundResult is expected!");
+            AssertX.IsInstanceOfType(result, typeof(NotFoundResult));
 
             mockIProductOptionServices.Setup(m => m.UpdateAsync(It.IsAny<ProductOptionDto>())).Throws(new DbUpdateConcurrencyException());
             result = await target.UpdateOption(mockApi.Id, mockApi) as ConflictResult;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ConflictResult), "A type of ConflictResult is expected!");
+            AssertX.IsInstanceOfType(result, typeof(ConflictResult));
 
         }
 
@@ -168,8 +160,7 @@ namespace Xero.Refactor.WebApiTests
             mockIProductOptionServices.Setup(m => m.UpdateAsync(It.IsAny<ProductOptionDto>())).Returns(Task.FromResult(transformedDto));
 
             var result = await target.UpdateOption(mockApi.Id, mockApi) as OkNegotiatedContentResult<ProductOptionApiModel>;
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ProductOptionApiModel>), "A type of OkNegotiatedContentResult<ProductOptionApiModel> is expected!");
+            AssertX.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ProductOptionApiModel>));
             Assert.AreEqual(mockDto.Id, result.Content.Id);
             Assert.AreEqual(mockDto.Id, result.Content.Id);
             Assert.AreEqual(mockApi.Name, result.Content.Name);
