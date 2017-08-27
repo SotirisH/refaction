@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.Services", "X
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.WebApi.Modeling", "Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj", "{9068EDD6-CE18-49DD-8295-507B10894E7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.AspNet.Core.Modelling", "Xero.AspNet.Core.Modelling\Xero.AspNet.Core.Modelling.csproj", "{7A78E143-8668-4B95-98AA-4D4320F9F1E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.AspNet.Core.Modelling", "Xero.AspNet.Core.Modelling\Xero.AspNet.Core.Modelling.csproj", "{7A78E143-8668-4B95-98AA-4D4320F9F1E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.ServicesTests", "Xero.Refactor.ServicesTests\Xero.Refactor.ServicesTests.csproj", "{2052B2CD-1E5F-4AE7-B022-3F6CB9FC45A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.ServicesTests", "Xero.Refactor.ServicesTests\Xero.Refactor.ServicesTests.csproj", "{2052B2CD-1E5F-4AE7-B022-3F6CB9FC45A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Test.Common", "Xero.Refactor.Test.Common\Xero.Refactor.Test.Common.csproj", "{250A069C-FE27-4F82-828A-C0CE9C542D49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.Test.Common", "Xero.Refactor.Test.Common\Xero.Refactor.Test.Common.csproj", "{250A069C-FE27-4F82-828A-C0CE9C542D49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApiTests", "Xero.Refactor.WebApiTests\Xero.Refactor.WebApiTests.csproj", "{8696CC78-2E33-4789-8AF7-4E5EC5F78623}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{250A069C-FE27-4F82-828A-C0CE9C542D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{250A069C-FE27-4F82-828A-C0CE9C542D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{250A069C-FE27-4F82-828A-C0CE9C542D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8696CC78-2E33-4789-8AF7-4E5EC5F78623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8696CC78-2E33-4789-8AF7-4E5EC5F78623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8696CC78-2E33-4789-8AF7-4E5EC5F78623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8696CC78-2E33-4789-8AF7-4E5EC5F78623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
