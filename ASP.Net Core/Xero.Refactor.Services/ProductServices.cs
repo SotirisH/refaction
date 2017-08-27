@@ -66,7 +66,8 @@ namespace Xero.Refactor.Services
             var efProduct = AutoMapper.Mapper.Map<Product>(product);
             DbContext.Products.Add(efProduct);
             await DbContext.SaveChangesAsync();
-            return AutoMapper.Mapper.Map<ProductDto>(efProduct);
+            var newP= await DbContext.Products.FindAsync(product.Id);
+            return AutoMapper.Mapper.Map<ProductDto>(newP);
         }
 
         public async Task<bool> DeleteByIdAsync(Guid id)

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
+    <PackageReference Include="Moq" Version="4.7.99" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xero.AspNet.Core.Modelling\Xero.AspNet.Core.Modelling.csproj" />
+    <ProjectReference Include="..\Xero.AspNet.Core\Xero.AspNet.Core.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Data.Models\Xero.Refactor.Data.Models.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Data\Xero.Refactor.Data.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Services\Xero.Refactor.Services.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Test.Common\Xero.Refactor.Test.Common.csproj" />
+  </ItemGroup>
+
+</Project>

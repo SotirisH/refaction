@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Xero.AspNet.Core.Modelling;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Xero.AspNet.Core.Data
 {
@@ -43,6 +45,13 @@ namespace Xero.AspNet.Core.Data
             ValidateModel();
             AddAudit();
             return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            ValidateModel();
+            AddAudit();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         /// <summary>
