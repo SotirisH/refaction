@@ -13,6 +13,7 @@ using Xero.Refactor.Services.Exceptions;
 using Xero.Refactor.Test.Common;
 using Xero.Refactor.WebApi;
 using Xero.Refactor.WebApi.Controllers;
+using Xero.Refactor.WebApi.Hypermedia;
 using Xero.Refactor.WebApi.Modeling;
 
 namespace Xero.Refactor.WebApiTests
@@ -39,7 +40,7 @@ namespace Xero.Refactor.WebApiTests
         {
             mockIProductServices = new Mock<IProductServices>();
             mockIProductOptionServices = new Mock<IProductOptionServices>();
-            target = new ProductsController(mockIProductServices.Object, mockIProductOptionServices.Object);
+            target = new ProductsController(mockIProductServices.Object, mockIProductOptionServices.Object,new LinkGenerator());
         }
 
         [TestMethod()]

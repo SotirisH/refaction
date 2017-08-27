@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Link.cs" />
+    <Compile Include="Models\LinkResource.cs" />
     <Compile Include="Models\ProductApiModel.cs" />
     <Compile Include="Models\ProductOptionApiModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

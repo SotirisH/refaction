@@ -4,6 +4,7 @@ using Unity.WebApi;
 using Xero.AspNet.Core.Data;
 using Xero.Refactor.Data;
 using Xero.Refactor.Services;
+using Xero.Refactor.WebApi.Hypermedia;
 
 namespace Xero.Refactor.WebApi
 {
@@ -31,7 +32,8 @@ namespace Xero.Refactor.WebApi
             container.RegisterType<IUnitOfWork<RefactorDb>, UnitOfWork<RefactorDb>>();
             container.RegisterType<IProductServices, ProductServices>();
             container.RegisterType<IProductOptionServices, ProductOptionServices>();
-
+            container.RegisterType<ILinkGenerator, LinkGenerator>();
+            
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

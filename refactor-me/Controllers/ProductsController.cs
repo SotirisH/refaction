@@ -7,30 +7,32 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Xero.Refactor.Services;
 using Xero.Refactor.Services.Exceptions;
+using Xero.Refactor.WebApi.Hypermedia;
 using Xero.Refactor.WebApi.Modeling;
-
 namespace Xero.Refactor.WebApi.Controllers
 {
-    [RoutePrefix("products")]
+    [RoutePrefix("api/products")]
     public class ProductsController : ApiController
     {
         private readonly IProductServices _productServices;
         private readonly IProductOptionServices _productOptionServices;
+        private readonly ILinkGenerator _linkGenerator;
 
         public ProductsController(IProductServices productServices,
-                                IProductOptionServices productOptionServices)
+                                  IProductOptionServices productOptionServices,
+                                  ILinkGenerator linkGenerator)
         {
             _productServices = productServices;
             _productOptionServices = productOptionServices;
+            _linkGenerator = linkGenerator;
         }
 
         [Route]
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            throw new Exception("Oh my god!");
-           // var result = await _productServices.GetAllAsync();
-            //return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
+            var result = await _productServices.GetAllAsync();
+            return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
         }
 
         [Route]
@@ -42,7 +44,8 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
+            var response = AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result);
+            return Ok(response);
         }
 
         [Route("{id}")]
@@ -54,7 +57,9 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(AutoMapper.Mapper.Map<ProductApiModel>(result));
+            var response = AutoMapper.Mapper.Map<ProductApiModel>(result);
+            _linkGenerator.PopulateLinksOnBasicVerbs(response, Url, "product", id);
+            return Ok(response);
         }
 
         [Route]

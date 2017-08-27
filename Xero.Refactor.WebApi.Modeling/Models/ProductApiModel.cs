@@ -1,11 +1,12 @@
 ﻿using FluentValidation.Attributes;
 using System;
+using System.Collections.Generic;
 using Xero.Refactor.WebApi.Modeling.Validators;
 
 namespace Xero.Refactor.WebApi.Modeling
 {
     [Validator(typeof(ProductValidator))]
-    public class ProductApiModel
+    public class ProductApiModel: ILinkResource
     {
         public Guid Id { get; set; }
 
@@ -21,5 +22,6 @@ namespace Xero.Refactor.WebApi.Modeling
         public string ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public string RowVersion { get; set; }
+        public List<Link> Links { get; set; }
     }
 }
