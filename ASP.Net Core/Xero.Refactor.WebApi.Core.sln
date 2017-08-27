@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Core", "Xero.Refactor.WebApi.Core\Xero.Refactor.WebApi.Core.csproj", "{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.WebApi.Core", "Xero.Refactor.WebApi.Core\Xero.Refactor.WebApi.Core.csproj", "{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.AspNet.Core", "Xero.AspNet.Core\Xero.AspNet.Core.csproj", "{DFF80F52-4776-48D4-AA5B-628CB3F04E37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.AspNet.Core", "Xero.AspNet.Core\Xero.AspNet.Core.csproj", "{DFF80F52-4776-48D4-AA5B-628CB3F04E37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data.Models", "Xero.Refactor.Data.Models\Xero.Refactor.Data.Models.csproj", "{174301D8-4B22-433E-84BD-16ECE011ABB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.Data.Models", "Xero.Refactor.Data.Models\Xero.Refactor.Data.Models.csproj", "{174301D8-4B22-433E-84BD-16ECE011ABB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data", "Xero.Refactor.Data\Xero.Refactor.Data.csproj", "{7726ED38-E1A4-4936-B817-D178D9491C81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.Data", "Xero.Refactor.Data\Xero.Refactor.Data.csproj", "{7726ED38-E1A4-4936-B817-D178D9491C81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Services", "Xero.Refactor.Services\Xero.Refactor.Services.csproj", "{E72348D4-114B-43A9-9243-0FA07570A2FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.Services", "Xero.Refactor.Services\Xero.Refactor.Services.csproj", "{E72348D4-114B-43A9-9243-0FA07570A2FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Modeling", "Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj", "{9068EDD6-CE18-49DD-8295-507B10894E7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero.Refactor.WebApi.Modeling", "Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj", "{9068EDD6-CE18-49DD-8295-507B10894E7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.AspNet.Core.Modelling", "Xero.AspNet.Core.Modelling\Xero.AspNet.Core.Modelling.csproj", "{7A78E143-8668-4B95-98AA-4D4320F9F1E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A78E143-8668-4B95-98AA-4D4320F9F1E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A78E143-8668-4B95-98AA-4D4320F9F1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A78E143-8668-4B95-98AA-4D4320F9F1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A78E143-8668-4B95-98AA-4D4320F9F1E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

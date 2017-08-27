@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Xero.AspNet.Core.Modelling\Xero.AspNet.Core.Modelling.csproj" />
-  </ItemGroup>
-
 </Project>

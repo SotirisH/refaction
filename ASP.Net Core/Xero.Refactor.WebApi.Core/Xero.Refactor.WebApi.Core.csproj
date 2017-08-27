@@ -22,4 +22,13 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Xero.AspNet.Core.Modelling\Xero.AspNet.Core.Modelling.csproj" />
+    <ProjectReference Include="..\Xero.AspNet.Core\Xero.AspNet.Core.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Data.Models\Xero.Refactor.Data.Models.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Data\Xero.Refactor.Data.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.Services\Xero.Refactor.Services.csproj" />
+    <ProjectReference Include="..\Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj" />
+  </ItemGroup>
+
 </Project>
