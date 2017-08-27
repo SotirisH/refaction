@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Core", "Xero.Refactor.WebApi.Core\Xero.Refactor.WebApi.Core.csproj", "{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.AspNet.Core", "Xero.AspNet.Core\Xero.AspNet.Core.csproj", "{DFF80F52-4776-48D4-AA5B-628CB3F04E37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data.Models", "Xero.Refactor.Data.Models\Xero.Refactor.Data.Models.csproj", "{174301D8-4B22-433E-84BD-16ECE011ABB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Data", "Xero.Refactor.Data\Xero.Refactor.Data.csproj", "{7726ED38-E1A4-4936-B817-D178D9491C81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Services", "Xero.Refactor.Services\Xero.Refactor.Services.csproj", "{E72348D4-114B-43A9-9243-0FA07570A2FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Modeling", "Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj", "{9068EDD6-CE18-49DD-8295-507B10894E7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C5A824A-92F2-4347-BBA1-B8E68FBC7897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF80F52-4776-48D4-AA5B-628CB3F04E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF80F52-4776-48D4-AA5B-628CB3F04E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF80F52-4776-48D4-AA5B-628CB3F04E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF80F52-4776-48D4-AA5B-628CB3F04E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174301D8-4B22-433E-84BD-16ECE011ABB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174301D8-4B22-433E-84BD-16ECE011ABB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174301D8-4B22-433E-84BD-16ECE011ABB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174301D8-4B22-433E-84BD-16ECE011ABB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7726ED38-E1A4-4936-B817-D178D9491C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7726ED38-E1A4-4936-B817-D178D9491C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7726ED38-E1A4-4936-B817-D178D9491C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7726ED38-E1A4-4936-B817-D178D9491C81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E72348D4-114B-43A9-9243-0FA07570A2FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E72348D4-114B-43A9-9243-0FA07570A2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E72348D4-114B-43A9-9243-0FA07570A2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E72348D4-114B-43A9-9243-0FA07570A2FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9068EDD6-CE18-49DD-8295-507B10894E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BECAE182-293B-4E3D-A687-56CF0551393D}
+	EndGlobalSection
+EndGlobal
