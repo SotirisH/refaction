@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xero.Refactor.ServicesTests;
+using Xero.Refactor.Test.Common;
 
 namespace Xero.Refactor.Services.Tests
 {
@@ -28,7 +29,7 @@ namespace Xero.Refactor.Services.Tests
 
 
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct = Fixtures.ProductsBuildOne();
+            var mockProduct = FixturesDto.ProductsBuildOne();
             var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
 
             Assert.IsNull(result.Exception);
@@ -42,7 +43,7 @@ namespace Xero.Refactor.Services.Tests
         public async Task Delete_product_sucess()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct = Fixtures.ProductsBuildOne();
+            var mockProduct = FixturesDto.ProductsBuildOne();
             var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
             var newProductId = result.Result.Id;
             var deleteResult = await target.DeleteByIdAsync(newProductId);
@@ -54,7 +55,7 @@ namespace Xero.Refactor.Services.Tests
         public async Task Delete_product_fail()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct = Fixtures.ProductsBuildOne();
+            var mockProduct = FixturesDto.ProductsBuildOne();
             var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
             var newProductId = Guid.NewGuid(); ;
             var deleteResult = await target.DeleteByIdAsync(newProductId);
@@ -65,9 +66,9 @@ namespace Xero.Refactor.Services.Tests
         public async Task Get_all_products_expected_two()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct1 = Fixtures.ProductsBuildOne();
+            var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
-            var mockProduct2 = Fixtures.ProductsBuildOne();
+            var mockProduct2 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct2);
 
             var result = await target.GetAllAsync();
@@ -79,9 +80,9 @@ namespace Xero.Refactor.Services.Tests
         public async Task Discover_product_by_id()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct1 = Fixtures.ProductsBuildOne();
+            var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
-            var mockProduct2 = Fixtures.ProductsBuildOne();
+            var mockProduct2 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct2);
 
             var result = await target.GetByIdAsync(mockProduct2.Id);
@@ -93,15 +94,15 @@ namespace Xero.Refactor.Services.Tests
         public async Task Discover_product_by_name_expect_two()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct1 = Fixtures.ProductsBuildOne();
+            var mockProduct1 = FixturesDto.ProductsBuildOne();
             // Bogus doesn't ensure unique names
             mockProduct1.Name = "Prod1";
             await target.CreateAsync(mockProduct1);
-            var mockProduct2 = Fixtures.ProductsBuildOne();
+            var mockProduct2 = FixturesDto.ProductsBuildOne();
 
             await target.CreateAsync(mockProduct2);
 
-            var mockProduct3 = Fixtures.ProductsBuildOne();
+            var mockProduct3 = FixturesDto.ProductsBuildOne();
             mockProduct3.Name = mockProduct2.Name;
             await target.CreateAsync(mockProduct3);
 
@@ -116,12 +117,12 @@ namespace Xero.Refactor.Services.Tests
         public async Task Update_product_success()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct1 = Fixtures.ProductsBuildOne();
+            var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
-            var mockProduct2 = Fixtures.ProductsBuildOne();
+            var mockProduct2 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct2);
 
-            var mockProduct3 = Fixtures.ProductsBuildOne();
+            var mockProduct3 = FixturesDto.ProductsBuildOne();
             var prodtoUpdate = await target.CreateAsync(mockProduct3);
 
             prodtoUpdate.Name = "UpdatedProd";
@@ -135,12 +136,12 @@ namespace Xero.Refactor.Services.Tests
         public async Task Update_product_conflict()
         {
             var target = new ProductServices(Helper.CreateMemoryUow());
-            var mockProduct1 = Fixtures.ProductsBuildOne();
+            var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
-            var mockProduct2 = Fixtures.ProductsBuildOne();
+            var mockProduct2 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct2);
 
-            var mockProduct3 = Fixtures.ProductsBuildOne();
+            var mockProduct3 = FixturesDto.ProductsBuildOne();
             var prodtoUpdate = await target.CreateAsync(mockProduct3);
 
             prodtoUpdate.Name = "UpdatedProd";

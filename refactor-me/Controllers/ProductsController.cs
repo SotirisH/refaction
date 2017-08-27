@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Xero.Refactor.Services;
@@ -14,12 +15,12 @@ namespace refactor_me.Controllers
     {
         private readonly IProductServices _productServices;
         private readonly IProductOptionServices _productOptionServices;
+
         public ProductsController(IProductServices productServices,
                                 IProductOptionServices productOptionServices)
         {
             _productServices = productServices;
             _productOptionServices = productOptionServices;
-
         }
 
         [Route]
@@ -35,7 +36,7 @@ namespace refactor_me.Controllers
         public async Task<IHttpActionResult> SearchByName(string name)
         {
             var result = await _productServices.GetByNameAsync(name);
-            if (result == null)
+            if (!result.Any())
             {
                 return NotFound();
             }
@@ -58,13 +59,14 @@ namespace refactor_me.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Create(ProductApiModel product)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var result = await _productServices.CreateAsync(AutoMapper.Mapper.Map<ProductDto>(product));
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
+            return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map < ProductApiModel>(result));
         }
 
         [Route("{id}")]
@@ -75,6 +77,12 @@ namespace refactor_me.Controllers
             {
                 return BadRequest(ModelState);
             }
+            if (id == Guid.Empty)
+            {
+                return BadRequest("The id cannot be empty!");
+            }
+
+            product.Id = id;
             try
             {
                 var result = await _productServices.UpdateAsync(AutoMapper.Mapper.Map<ProductDto>(product));
@@ -92,29 +100,20 @@ namespace refactor_me.Controllers
             {
                 throw;
             }
-
         }
 
         [Route("{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(Guid id)
         {
-            try
+            var result = await _productServices.DeleteByIdAsync(id);
+            if (result)
             {
-                var result = await _productServices.DeleteByIdAsync(id);
                 return Ok();
             }
-            catch (EntityNotFoundException)
+            else
             {
                 return NotFound();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return Conflict();
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 

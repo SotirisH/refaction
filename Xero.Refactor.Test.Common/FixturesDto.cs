@@ -1,8 +1,8 @@
 ﻿using Xero.Refactor.Services;
 
-namespace Xero.Refactor.ServicesTests
+namespace Xero.Refactor.Test.Common
 {
-    internal static class Fixtures
+    public static class FixturesDto
     {
         /// <summary>
         /// Builds one Product

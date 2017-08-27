@@ -21,6 +21,5 @@ namespace Xero.Refactor.WebApi.Modeling
         public string ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public string RowVersion { get; set; }
-
     }
 }

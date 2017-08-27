@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApi.Modeli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.ServicesTests", "Xero.Refactor.ServicesTests\Xero.Refactor.ServicesTests.csproj", "{DDF56E71-601A-409D-B091-1C882942BDED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.WebApiTests", "Xero.Refactor.WebApiTests\Xero.Refactor.WebApiTests.csproj", "{AA989F37-590C-4B1C-AAA4-266E3965E272}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xero.Refactor.Test.Common", "Xero.Refactor.Test.Common\Xero.Refactor.Test.Common.csproj", "{576D62EC-BEAE-466F-B879-3AB4D08FF6E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{DDF56E71-601A-409D-B091-1C882942BDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDF56E71-601A-409D-B091-1C882942BDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDF56E71-601A-409D-B091-1C882942BDED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA989F37-590C-4B1C-AAA4-266E3965E272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA989F37-590C-4B1C-AAA4-266E3965E272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA989F37-590C-4B1C-AAA4-266E3965E272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA989F37-590C-4B1C-AAA4-266E3965E272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{576D62EC-BEAE-466F-B879-3AB4D08FF6E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{576D62EC-BEAE-466F-B879-3AB4D08FF6E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{576D62EC-BEAE-466F-B879-3AB4D08FF6E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{576D62EC-BEAE-466F-B879-3AB4D08FF6E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

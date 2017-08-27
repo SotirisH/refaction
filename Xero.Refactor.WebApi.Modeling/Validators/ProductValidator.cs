@@ -8,7 +8,6 @@ namespace Xero.Refactor.WebApi.Modeling.Validators
         {
             RuleFor(p => p.Name).NotEmpty().MaximumLength(100);
             RuleFor(p => p.Description).MaximumLength(500);
-            RuleFor(p => p.RowVersion).NotEmpty();
             RuleFor(p => p.Price).GreaterThanOrEqualTo(0);
             RuleFor(p => p.DeliveryPrice).GreaterThanOrEqualTo(0);
         }

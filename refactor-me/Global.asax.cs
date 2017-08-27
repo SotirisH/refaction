@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using AutoMapper;
 using System.Web.Http;
-using System.Web.Routing;
+using Xero.Refactor.Services;
+using Xero.Refactor.WebApi;
 
 namespace refactor_me
 {
@@ -13,6 +11,12 @@ namespace refactor_me
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             UnityConfig.RegisterComponents();
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperDtoProfile>();
+                cfg.AddProfile<AutoMapperApiModelProfile>();
+            });
         }
     }
 }
