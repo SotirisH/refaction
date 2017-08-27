@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,16 @@ namespace Xero.Refactor.WebApi.Controllers
     {
         private readonly IProductServices _productServices;
         private readonly IProductOptionServices _productOptionServices;
+        private readonly IMapper _mapper;
         //private readonly ILinkGenerator _linkGenerator;
 
         public ProductsController(IProductServices productServices,
-                                  IProductOptionServices productOptionServices)
+                                  IProductOptionServices productOptionServices,
+                                  IMapper mapper)
         {
             _productServices = productServices;
             _productOptionServices = productOptionServices;
+            _mapper = mapper;
             //  _linkGenerator = linkGenerator;
         }
 
@@ -40,7 +44,7 @@ namespace Xero.Refactor.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _productServices.GetAllAsync();
-            return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
+            return Ok(_mapper.Map<IEnumerable<ProductApiModel>>(result));
         }
 
         /// <summary>
@@ -58,7 +62,7 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return NotFound();
             }
-            var response = AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result);
+            var response = _mapper.Map<IEnumerable<ProductApiModel>>(result);
             return Ok(response);
         }
 
@@ -78,7 +82,7 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return NotFound();
             }
-            var response = AutoMapper.Mapper.Map<ProductApiModel>(result);
+            var response = _mapper.Map<ProductApiModel>(result);
             // _linkGenerator.PopulateLinksOnBasicVerbs(response, Url, "product", id);
             return Ok(response);
         }
@@ -98,9 +102,9 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _productServices.CreateAsync(AutoMapper.Mapper.Map<ProductDto>(product));
+            var result = await _productServices.CreateAsync(_mapper.Map<ProductDto>(product));
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map<ProductApiModel>(result));
+            return CreatedAtRoute("DefaultApi", new { id = result.Id }, _mapper.Map<ProductApiModel>(result));
         }
 
         /// <summary>
@@ -128,8 +132,8 @@ namespace Xero.Refactor.WebApi.Controllers
             product.Id = id;
             try
             {
-                var result = await _productServices.UpdateAsync(AutoMapper.Mapper.Map<ProductDto>(product));
-                return Ok(AutoMapper.Mapper.Map<ProductApiModel>(result));
+                var result = await _productServices.UpdateAsync(_mapper.Map<ProductDto>(product));
+                return Ok(_mapper.Map<ProductApiModel>(result));
             }
             catch (EntityNotFoundException)
             {
@@ -180,7 +184,7 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductOptionApiModel>>(result));
+            return Ok(_mapper.Map<IEnumerable<ProductOptionApiModel>>(result));
         }
 
         [Route("{productId}/options/{id}")]
@@ -194,7 +198,7 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(AutoMapper.Mapper.Map<ProductOptionApiModel>(result));
+            return Ok(_mapper.Map<ProductOptionApiModel>(result));
         }
 
         [Route("{productId}/options")]
@@ -208,9 +212,9 @@ namespace Xero.Refactor.WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _productOptionServices.CreateAsync(AutoMapper.Mapper.Map<ProductOptionDto>(option));
+            var result = await _productOptionServices.CreateAsync(_mapper.Map<ProductOptionDto>(option));
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map<ProductOptionApiModel>(result));
+            return CreatedAtRoute("DefaultApi", new { id = result.Id }, _mapper.Map<ProductOptionApiModel>(result));
         }
 
         [Route("{productId}/options/{id}")]
@@ -233,8 +237,8 @@ namespace Xero.Refactor.WebApi.Controllers
             option.Id = id;
             try
             {
-                var result = await _productOptionServices.UpdateAsync(AutoMapper.Mapper.Map<ProductOptionDto>(option));
-                return Ok(AutoMapper.Mapper.Map<ProductOptionApiModel>(result));
+                var result = await _productOptionServices.UpdateAsync(_mapper.Map<ProductOptionDto>(option));
+                return Ok(_mapper.Map<ProductOptionApiModel>(result));
             }
             catch (EntityNotFoundException)
             {

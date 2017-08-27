@@ -24,6 +24,7 @@ namespace Xero.Refactor.Services.Tests
         [TestInitialize]
         public void TestInit()
         {
+
             DbMemoryHelper.Get();
         }
 
@@ -39,7 +40,7 @@ namespace Xero.Refactor.Services.Tests
         {
 
 
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct = FixturesDto.ProductsBuildOne();
             var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
 
@@ -50,7 +51,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Delete_product_sucess()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct = FixturesDto.ProductsBuildOne();
             var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
             var newProductId = result.Result.Id;
@@ -62,7 +63,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Delete_product_fail()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct = FixturesDto.ProductsBuildOne();
             var result = Task.FromResult(target.CreateAsync(mockProduct)).Result;
             var newProductId = Guid.NewGuid(); ;
@@ -73,7 +74,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Get_all_products_expected_two()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
             var mockProduct2 = FixturesDto.ProductsBuildOne();
@@ -87,7 +88,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Discover_product_by_id()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
             var mockProduct2 = FixturesDto.ProductsBuildOne();
@@ -102,7 +103,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Discover_product_by_name_expect_two()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct1 = FixturesDto.ProductsBuildOne();
             // Bogus doesn't ensure unique names
             mockProduct1.Name = "Prod1";
@@ -126,7 +127,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Update_product_success()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
             var mockProduct2 = FixturesDto.ProductsBuildOne();
@@ -145,7 +146,7 @@ namespace Xero.Refactor.Services.Tests
         [TestMethod()]
         public async Task Update_product_conflict()
         {
-            var target = new ProductServices(DbMemoryHelper.Get());
+            var target = new ProductServices(DbMemoryHelper.Get(), Mapper.Instance);
             var mockProduct1 = FixturesDto.ProductsBuildOne();
             await target.CreateAsync(mockProduct1);
             var mockProduct2 = FixturesDto.ProductsBuildOne();

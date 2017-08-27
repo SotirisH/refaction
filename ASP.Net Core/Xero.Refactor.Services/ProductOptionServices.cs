@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,10 +47,11 @@ namespace Xero.Refactor.Services
 
     public class ProductOptionServices : DbServiceBase<RefactorDb>, IProductOptionServices
     {
-
-        public ProductOptionServices(RefactorDb db) : base(db)
+        private readonly IMapper _mapper;
+        public ProductOptionServices(RefactorDb db,
+                                    IMapper mapper) : base(db)
         {
-
+            _mapper = mapper;
         }
 
         public async Task<ProductOptionDto> CreateAsync(ProductOptionDto productOption)
@@ -58,10 +60,10 @@ namespace Xero.Refactor.Services
             {
                 productOption.Id = Guid.NewGuid();
             }
-            var efentity = AutoMapper.Mapper.Map<ProductOption>(productOption);
+            var efentity = _mapper.Map<ProductOption>(productOption);
             DbContext.Add(efentity);
             await DbContext.SaveChangesAsync();
-            return AutoMapper.Mapper.Map<ProductOptionDto>(efentity);
+            return _mapper.Map<ProductOptionDto>(efentity);
         }
 
         public async Task<bool> DeleteByIdAsync(Guid id)
@@ -80,18 +82,18 @@ namespace Xero.Refactor.Services
         public async Task<ProductOptionDto> GetByIdAsync(Guid id)
         {
             var result = await DbContext.ProductOptions.FindAsync(id);
-            return AutoMapper.Mapper.Map<ProductOptionDto>(result);
+            return _mapper.Map<ProductOptionDto>(result);
         }
 
         public async Task<IEnumerable<ProductOptionDto>> GetByProductIdAsync(Guid productId)
         {
             var result = await DbContext.ProductOptions.Where(x => x.ProductId == productId).ToArrayAsync();
-            return AutoMapper.Mapper.Map<IEnumerable<ProductOptionDto>>(result);
+            return _mapper.Map<IEnumerable<ProductOptionDto>>(result);
         }
 
         public async Task<ProductOptionDto> UpdateAsync(ProductOptionDto productOption)
         {
-            var entityToUpdate = AutoMapper.Mapper.Map<ProductOption>(productOption);
+            var entityToUpdate = _mapper.Map<ProductOption>(productOption);
             //Check if the entity exists
             if (!await DbContext.ProductOptions.AnyAsync(x => x.Id == productOption.Id))
             {
@@ -99,7 +101,7 @@ namespace Xero.Refactor.Services
             }
             DbContext.ProductOptions.Update(entityToUpdate);
             await DbContext.SaveChangesAsync(); 
-            return AutoMapper.Mapper.Map<ProductOptionDto>(entityToUpdate);
+            return _mapper.Map<ProductOptionDto>(entityToUpdate);
 
         }
     }

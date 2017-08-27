@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Data\Database.mdf" />
+    <Content Include="Data\Database_log.ldf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
@@ -29,6 +34,12 @@
     <ProjectReference Include="..\Xero.Refactor.Data\Xero.Refactor.Data.csproj" />
     <ProjectReference Include="..\Xero.Refactor.Services\Xero.Refactor.Services.csproj" />
     <ProjectReference Include="..\Xero.Refactor.WebApi.Modeling\Xero.Refactor.WebApi.Modeling.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\Database.mdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

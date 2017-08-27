@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,9 +53,11 @@ namespace Xero.Refactor.Services
     public class ProductServices : DbServiceBase<RefactorDb>, IProductServices
     {
 
-        public ProductServices(RefactorDb db) : base(db)
+        private readonly IMapper _mapper;
+        public ProductServices(RefactorDb db,
+                                    IMapper mapper) : base(db)
         {
-
+            _mapper = mapper;
         }
 
         public async Task<ProductDto> CreateAsync(ProductDto product)
@@ -63,11 +66,11 @@ namespace Xero.Refactor.Services
             {
                 product.Id = Guid.NewGuid();
             }
-            var efProduct = AutoMapper.Mapper.Map<Product>(product);
+            var efProduct = _mapper.Map<Product>(product);
             DbContext.Products.Add(efProduct);
             await DbContext.SaveChangesAsync();
             var newP= await DbContext.Products.FindAsync(product.Id);
-            return AutoMapper.Mapper.Map<ProductDto>(newP);
+            return _mapper.Map<ProductDto>(newP);
         }
 
         public async Task<bool> DeleteByIdAsync(Guid id)
@@ -85,24 +88,24 @@ namespace Xero.Refactor.Services
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
             var result = await DbContext.Products.ToArrayAsync();
-            return AutoMapper.Mapper.Map<IEnumerable<ProductDto>>(result);
+            return _mapper.Map<IEnumerable<ProductDto>>(result);
         }
 
         public async Task<ProductDto> GetByIdAsync(Guid id)
         {
             var result = await DbContext.Products.FindAsync(id);
-            return AutoMapper.Mapper.Map<ProductDto>(result);
+            return _mapper.Map<ProductDto>(result);
         }
 
         public async Task<IEnumerable<ProductDto>> GetByNameAsync(string name)
         {
             var result = await DbContext.Products.Where(x => x.Name == name).ToArrayAsync();
-            return AutoMapper.Mapper.Map<IEnumerable<ProductDto>>(result);
+            return _mapper.Map<IEnumerable<ProductDto>>(result);
         }
 
         public async Task<ProductDto> UpdateAsync(ProductDto product)
         {
-            var efProduct = AutoMapper.Mapper.Map<Product>(product);
+            var efProduct = _mapper.Map<Product>(product);
             if (!await DbContext.Products.AnyAsync(x => x.Id == efProduct.Id))
             {
                 throw new EntityNotFoundException($"The Product with Id:{efProduct.Id} could not be found in order to update it");
@@ -111,7 +114,7 @@ namespace Xero.Refactor.Services
             await DbContext.SaveChangesAsync();
             // get the new values of the timestamp
             var t = await DbContext.Products.FindAsync(product.Id);
-            return AutoMapper.Mapper.Map<ProductDto>(t);
+            return _mapper.Map<ProductDto>(t);
         }
     }
 }
