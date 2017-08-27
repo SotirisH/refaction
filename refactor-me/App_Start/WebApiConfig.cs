@@ -1,5 +1,7 @@
 ﻿using FluentValidation.WebApi;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using Xero.Refactor.WebApi.ErrorHandling;
 
 namespace Xero.Refactor.WebApi
 {
@@ -23,6 +25,10 @@ namespace Xero.Refactor.WebApi
 
             // Register FluentValidationModelValidator here
             FluentValidationModelValidatorProvider.Configure(config);
+
+            // Register the global error handler here
+            //config.Services.Add(typeof(IExceptionHandler), new GlobalExceptionHandler());
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
         }
     }
 }

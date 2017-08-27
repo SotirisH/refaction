@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Xero.Refactor.Services;
@@ -27,8 +28,9 @@ namespace Xero.Refactor.WebApi.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            var result = await _productServices.GetAllAsync();
-            return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
+            throw new Exception("Oh my god!");
+           // var result = await _productServices.GetAllAsync();
+            //return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductApiModel>>(result));
         }
 
         [Route]
@@ -109,7 +111,9 @@ namespace Xero.Refactor.WebApi.Controllers
             var result = await _productServices.DeleteByIdAsync(id);
             if (result)
             {
-                return Ok();
+                // Return a response message with status code 204 (No Content)
+                // To indicate that the operation was successful
+                return StatusCode(HttpStatusCode.NoContent);
             }
             else
             {
@@ -195,7 +199,9 @@ namespace Xero.Refactor.WebApi.Controllers
             var result = await _productOptionServices.DeleteByIdAsync(id);
             if (result)
             {
-                return Ok();
+                // Return a response message with status code 204 (No Content)
+                // To indicate that the operation was successful
+                return StatusCode(HttpStatusCode.NoContent);
             }
             else
             {

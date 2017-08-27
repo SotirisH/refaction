@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -106,8 +107,10 @@ namespace Xero.Refactor.WebApiTests
         {
             mockIProductOptionServices.Setup(m => m.DeleteByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(true));
 
-            var result = await target.DeleteOption(Guid.NewGuid()) as OkResult;
-            AssertX.IsInstanceOfType(result, typeof(OkResult));
+            var result = await target.DeleteOption(Guid.NewGuid()) as StatusCodeResult;
+            AssertX.IsInstanceOfType(result, typeof(StatusCodeResult));
+            Assert.AreEqual(HttpStatusCode.NoContent, result.StatusCode);
+
         }
 
         [TestMethod()]
