@@ -22,7 +22,7 @@ namespace Xero.Refactor.ServicesTests
             mockICurrentUserService.Setup(p => p.GetCurrentUser()).Returns("TestUser");
 
             DbConnection memoryConnection = Effort.DbConnectionFactory.CreateTransient();
-            var memDB = new Data.RefactorDb(memoryConnection);
+            var memDB = new RefactorDb(memoryConnection);
             // Mocking up dbFactory
             var mockdbFactory = new Mock<DbFactory<RefactorDb>>();
             mockdbFactory.Setup(m => m.DBContext).Returns(memDB);

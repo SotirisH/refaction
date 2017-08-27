@@ -33,6 +33,7 @@ namespace Xero.AspNet.Core.Data
 
             _currentUserService = dbFactorycurrentUserService;
             _dbFactory = dbFactory;
+            _dbFactory.DBContext.CurrentUserService = dbFactorycurrentUserService;
         }
 
         public DB DbContext => _dbFactory.DBContext;
@@ -40,7 +41,7 @@ namespace Xero.AspNet.Core.Data
 
         public string UserName => _currentUserService.GetCurrentUser();
 
-        public void Commit() => DbContext.SaveChanges(UserName);
+        public void Commit() => DbContext.SaveChanges();
 
         public async Task<int> CommitAsync() => await DbContext.SaveChangesAsync();
     }

@@ -6,6 +6,6 @@
     /// </summary>
     public interface IAuditableDBContext
     {
-        int SaveChanges(string userName);
+        ICurrentUserService CurrentUserService { get; set; }
     }
 }
