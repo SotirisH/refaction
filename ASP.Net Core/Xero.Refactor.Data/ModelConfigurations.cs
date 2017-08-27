@@ -21,6 +21,7 @@ namespace Xero.Refactor.Data
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             {
+                builder.ToTable("Product");
                 builder.HasKey(p => p.Id);
                 //Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
                 builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
@@ -35,6 +36,7 @@ namespace Xero.Refactor.Data
     {
         public void Configure(EntityTypeBuilder<ProductOption> builder)
         {
+            builder.ToTable("ProductOption");
             builder.HasKey(p => p.Id);
             //Property(p => p.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             builder.Property(p => p.Name).IsRequired().HasMaxLength(100);

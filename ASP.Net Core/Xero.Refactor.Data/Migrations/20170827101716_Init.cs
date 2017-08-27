@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
-using System.Collections.Generic;
 
 namespace Xero.Refactor.Data.Migrations
 {
@@ -9,7 +8,7 @@ namespace Xero.Refactor.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -29,7 +28,7 @@ namespace Xero.Refactor.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOptions",
+                name: "ProductOption",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -44,28 +43,28 @@ namespace Xero.Refactor.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOptions", x => x.Id);
+                    table.PrimaryKey("PK_ProductOption", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductOptions_Products_ProductId",
+                        name: "FK_ProductOption_Product_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOptions_ProductId",
-                table: "ProductOptions",
+                name: "IX_ProductOption_ProductId",
+                table: "ProductOption",
                 column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductOptions");
+                name: "ProductOption");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Product");
         }
     }
 }

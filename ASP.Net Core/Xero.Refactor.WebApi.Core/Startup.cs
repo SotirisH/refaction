@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using FluentValidation.AspNetCore;
+using FluentValidation.Attributes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using FluentValidation.AspNetCore;
-using FluentValidation.Attributes;
-using AutoMapper;
 
 namespace Xero.Refactor.WebApi.Core
 {
@@ -42,7 +36,7 @@ namespace Xero.Refactor.WebApi.Core
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc(routes => routes.MapRoute("default", "{controller}/{action}/{id?}"));
+            app.UseMvc(routes => routes.MapRoute("DefaultApi", "api/{controller}/{action}/{id?}"));
         }
     }
 }
