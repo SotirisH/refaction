@@ -17,8 +17,9 @@ For the consumers, the following principles should be followed:
  
 ## Creating project structure
 The implementation of the solution should not be a monolithic project. In order to apply the single rensponsibility and Segregation of concerns principles, multiple projects have been introduced, using consistent naming conventions
+
 | Project Name | Description |
-| ------------- | ------------- |
+| --- | --- |
 | Xero.AspNet.Core | Core classes that are shared among all projects |
 | Xero.Refactor.Data | EF, migration and Repositories |
 | Xero.Refactor.Data.Models | EF models |
