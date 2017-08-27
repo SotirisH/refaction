@@ -8,7 +8,7 @@ using Xero.Refactor.Services;
 using Xero.Refactor.Services.Exceptions;
 using Xero.Refactor.WebApi.Modeling;
 
-namespace refactor_me.Controllers
+namespace Xero.Refactor.WebApi.Controllers
 {
     [RoutePrefix("products")]
     public class ProductsController : ApiController
@@ -66,7 +66,7 @@ namespace refactor_me.Controllers
             }
             var result = await _productServices.CreateAsync(AutoMapper.Mapper.Map<ProductDto>(product));
 
-            return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map < ProductApiModel>(result));
+            return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map<ProductApiModel>(result));
         }
 
         [Route("{id}")]
@@ -117,52 +117,90 @@ namespace refactor_me.Controllers
             }
         }
 
-        //[Route("{productId}/options")]
-        //[HttpGet]
-        //public ProductOptions GetOptions(Guid productId)
-        //{
-        //    return new ProductOptions(productId);
-        //}
+        [Route("{productId}/options")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetOptions(Guid productId)
+        {
+            var result = await _productOptionServices.GetByProductIdAsync(productId);
+            if (!result.Any())
+            {
+                return NotFound();
+            }
+            return Ok(AutoMapper.Mapper.Map<IEnumerable<ProductOptionApiModel>>(result));
+        }
 
-        //[Route("{productId}/options/{id}")]
-        //[HttpGet]
-        //public ProductOption GetOption(Guid productId, Guid id)
-        //{
-        //    var option = new ProductOption(id);
-        //    if (option.IsNew)
-        //        throw new HttpResponseException(HttpStatusCode.NotFound);
+        [Route("{productId}/options/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetOption(Guid productId, Guid id)
+        {
+            var result = await _productOptionServices.GetByIdAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(AutoMapper.Mapper.Map<ProductOptionApiModel>(result));
+        }
 
-        //    return option;
-        //}
+        [Route("{productId}/options")]
+        [HttpPost]
+        public async Task<IHttpActionResult> CreateOption(Guid productId, ProductOptionApiModel option)
+        {
+            option.ProductId = productId;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _productOptionServices.CreateAsync(AutoMapper.Mapper.Map<ProductOptionDto>(option));
 
-        //[Route("{productId}/options")]
-        //[HttpPost]
-        //public void CreateOption(Guid productId, ProductOption option)
-        //{
-        //    option.ProductId = productId;
-        //    option.Save();
-        //}
+            return CreatedAtRoute("DefaultApi", new { id = result.Id }, AutoMapper.Mapper.Map<ProductOptionApiModel>(result));
+        }
 
-        //[Route("{productId}/options/{id}")]
-        //[HttpPut]
-        //public void UpdateOption(Guid id, ProductOption option)
-        //{
-        //    var orig = new ProductOption(id)
-        //    {
-        //        Name = option.Name,
-        //        Description = option.Description
-        //    };
+        [Route("{productId}/options/{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> UpdateOption(Guid id, ProductOptionApiModel option)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id == Guid.Empty)
+            {
+                return BadRequest("The id cannot be empty!");
+            }
 
-        //    if (!orig.IsNew)
-        //        orig.Save();
-        //}
+            option.Id = id;
+            try
+            {
+                var result = await _productOptionServices.UpdateAsync(AutoMapper.Mapper.Map<ProductOptionDto>(option));
+                return Ok(AutoMapper.Mapper.Map<ProductOptionApiModel>(result));
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Conflict();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //[Route("{productId}/options/{id}")]
-        //[HttpDelete]
-        //public void DeleteOption(Guid id)
-        //{
-        //    var opt = new ProductOption(id);
-        //    opt.Delete();
-        //}
+        [Route("{productId}/options/{id}")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteOption(Guid id)
+        {
+            var result = await _productOptionServices.DeleteByIdAsync(id);
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

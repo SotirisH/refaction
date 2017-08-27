@@ -19,10 +19,9 @@ namespace Xero.Refactor.Services
         /// <summary>
         /// Gets a single product option given the productId & id
         /// </summary>
-        /// <param name="productId"></param>
-        /// <param name="id">Teh product option Id</param>
+        /// <param name="id">The product option Id</param>
         /// <returns></returns>
-        Task<ProductOptionDto> GetByIdAsync(Guid productId, Guid id);
+        Task<ProductOptionDto> GetByIdAsync(Guid id);
         /// <summary>
         /// Creates an new productOption option
         /// </summary>
@@ -75,9 +74,9 @@ namespace Xero.Refactor.Services
             return true;
         }
 
-        public async Task<ProductOptionDto> GetByIdAsync(Guid productId, Guid id)
+        public async Task<ProductOptionDto> GetByIdAsync( Guid id)
         {
-            var result = await _productOptionRepository.GetAsync(x => x.Id == id && x.ProductId == productId);
+            var result = await _productOptionRepository.GetAsync(x => x.Id == id);
             return AutoMapper.Mapper.Map<ProductOptionDto>(result);
         }
 

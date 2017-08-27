@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="Controllers\ProductsControllerTests.ProductOptions.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

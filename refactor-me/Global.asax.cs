@@ -3,7 +3,7 @@ using System.Web.Http;
 using Xero.Refactor.Services;
 using Xero.Refactor.WebApi;
 
-namespace refactor_me
+namespace Xero.Refactor.WebApi
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

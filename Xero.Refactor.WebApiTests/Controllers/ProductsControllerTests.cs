@@ -11,14 +11,15 @@ using Xero.Refactor.Services;
 using Xero.Refactor.Services.Exceptions;
 using Xero.Refactor.Test.Common;
 using Xero.Refactor.WebApi;
+using Xero.Refactor.WebApi.Controllers;
 using Xero.Refactor.WebApi.Modeling;
 
-namespace refactor_me.Controllers.Tests
+namespace Xero.Refactor.WebApiTests
 {
     [TestClass()]
-    public class ProductsControllerTests
+    public partial class ProductsControllerTests
     {
-        private Mock<IProductServices>  mockIProductServices = new Mock<IProductServices>();
+        private Mock<IProductServices> mockIProductServices = new Mock<IProductServices>();
         private Mock<IProductOptionServices> mockIProductOptionServices = new Mock<IProductOptionServices>();
         private ProductsController target;
 
@@ -62,6 +63,7 @@ namespace refactor_me.Controllers.Tests
             mockIProductServices.Setup(m => m.GetByNameAsync("Me")).Returns(Task.FromResult(retMock));
 
             var result = await target.SearchByName("Any") as IHttpActionResult;
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
 
         }
@@ -75,6 +77,7 @@ namespace refactor_me.Controllers.Tests
             mockIProductServices.Setup(m => m.GetByIdAsync(mockProductDto.Id)).Returns(Task.FromResult(mockProductDto));
 
             var result = await target.GetProduct(Guid.NewGuid()) as IHttpActionResult;
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
 
         }
@@ -138,20 +141,23 @@ namespace refactor_me.Controllers.Tests
 
             target.ModelState.AddModelError("Price", "Price should be a positive value!");
             IHttpActionResult result = await target.Update(mockProductDto.Id, mockApiModel) as InvalidModelStateResult;
-
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(InvalidModelStateResult), "A type of InvalidModelStateResult is expected!");
             CollectionAssert.Contains(((InvalidModelStateResult)result).ModelState.Keys.ToArray(), "Price");
 
             target.ModelState.Clear();
             result = await target.Update(Guid.Empty, mockApiModel) as BadRequestErrorMessageResult;
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(BadRequestErrorMessageResult), "A type of BadRequestResult is expected!");
 
             mockIProductServices.Setup(m => m.UpdateAsync(It.IsAny<ProductDto>())).Throws(new EntityNotFoundException("Not found!"));
             result = await target.Update(mockProductDto.Id, mockApiModel) as NotFoundResult;
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NotFoundResult), "A type of NotFoundResult is expected!");
 
             mockIProductServices.Setup(m => m.UpdateAsync(It.IsAny<ProductDto>())).Throws(new DbUpdateConcurrencyException());
             result = await target.Update(mockProductDto.Id, mockApiModel) as ConflictResult;
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ConflictResult), "A type of ConflictResult is expected!");
 
         }
@@ -166,7 +172,7 @@ namespace refactor_me.Controllers.Tests
             mockIProductServices.Setup(m => m.UpdateAsync(It.IsAny<ProductDto>())).Returns(Task.FromResult(mockProductDto));
 
             var result = await target.Update(mockProductDto.Id, mockApiModel) as OkNegotiatedContentResult<ProductApiModel>;
-
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ProductApiModel>), "A type of OkNegotiatedContentResult<ProductApiModel> is expected!");
             Assert.AreEqual(mockProductDto.Id, result.Content.Id);
         }
@@ -179,8 +185,7 @@ namespace refactor_me.Controllers.Tests
             mockIProductServices.Setup(m => m.DeleteByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(true));
 
             var result = await target.Delete(mockProductDto.Id) as OkResult;
-
-            Assert.IsInstanceOfType(result, typeof(OkResult), "A type of OkResult is expected!");
+            Assert.IsNotNull(result, "A type of OkResult is expected!");
         }
 
         [TestMethod()]
@@ -189,8 +194,8 @@ namespace refactor_me.Controllers.Tests
             mockIProductServices.Setup(m => m.DeleteByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(false));
 
             var result = await target.Delete(Guid.NewGuid()) as NotFoundResult;
-
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult), "A type of NotFoundResult is expected!");
+           Assert.IsNotNull(result);
+           Assert.IsInstanceOfType(result, typeof(NotFoundResult), "A type of NotFoundResult is expected!");
         }
     }
 }

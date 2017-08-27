@@ -5,7 +5,7 @@ using Xero.AspNet.Core.Data;
 using Xero.Refactor.Data;
 using Xero.Refactor.Services;
 
-namespace refactor_me
+namespace Xero.Refactor.WebApi
 {
     public class CurrentUserService : ICurrentUserService
     {

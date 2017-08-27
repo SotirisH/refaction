@@ -1,4 +1,5 @@
-﻿using Xero.Refactor.Services;
+﻿using System;
+using Xero.Refactor.Services;
 
 namespace Xero.Refactor.Test.Common
 {
@@ -19,7 +20,24 @@ namespace Xero.Refactor.Test.Common
 
             return prod;
         }
+        /// <summary>
+        /// Builds a mock of a ProductOptionDto
+        /// </summary>
+        /// <param name="productId">The id of the related product. If it not specified then a new random Guid will be created and assigned to this mock</param>
+        /// <returns></returns>
+        public static ProductOptionDto ProductOptionBuildOne(Guid? productId)
+        {
+            if (productId.GetValueOrDefault() == Guid.Empty)
+            {
+                productId = Guid.NewGuid();
+            }
+            var faker = new Bogus.Faker();
+            var prod = new ProductOptionDto();
+            prod.Name = faker.Commerce.Product();
+            prod.Description = faker.Commerce.ProductMaterial();
 
+            return prod;
+        }
 
     }
 }

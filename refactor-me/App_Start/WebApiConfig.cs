@@ -1,7 +1,7 @@
 ﻿using FluentValidation.WebApi;
 using System.Web.Http;
 
-namespace refactor_me
+namespace Xero.Refactor.WebApi
 {
     public static class WebApiConfig
     {
